@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-blue: #1677FF;
+  --deep-navy: #102A43;
+  --bg-light: #F5F9FF;
+  --border-color: #D9E2EC;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: #102A43;
+  background-color: #FFFFFF;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F5F9FF;
+}
+::-webkit-scrollbar-thumb {
+  background: #D9E2EC;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1677FF;
+}
+
+/* Glass effect */
+.glass-nav {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Card hover animation */
+.hover-card {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+}
+.hover-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Button pulse subtle */
+@keyframes subtle-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+.subtle-pulse {
+  animation: subtle-pulse 3s infinite ease-in-out;
+}
