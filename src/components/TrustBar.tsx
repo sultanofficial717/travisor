@@ -37,10 +37,10 @@ export const TrustBar: React.FC = () => {
                   <IconComponent className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-[15px] font-bold text-travsior-navy mb-1">
+                  <h4 className="text-sm sm:text-base font-bold text-travsior-navy mb-1">
                     {pillar.title}
                   </h4>
-                  <p className="text-xs sm:text-[13px] text-travsior-navyMuted leading-relaxed">
+                  <p className="text-xs text-travsior-navyMuted leading-relaxed">
                     {pillar.description}
                   </p>
                 </div>

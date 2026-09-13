@@ -81,15 +81,6 @@ export const VisitVisaSection: React.FC<VisitVisaSectionProps> = ({ onOpenConsul
                 );
               })}
             </div>
-
-            {/* Fixed Issue 22: bg-travsior-blue (#0958D9) yields 6.16:1 contrast against white */}
-            <button
-              onClick={() => onOpenConsultation("Visit Visa")}
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-btn bg-travsior-blue hover:bg-travsior-blueHover text-white text-sm sm:text-base font-semibold shadow-md transition-all"
-            >
-              <span>Talk to a Visa Consultant</span>
-              <ArrowRight className="w-4 h-4" aria-hidden="true" />
-            </button>
           </div>
 
           {/* Right Column: 3-Stage Process Card */}
@@ -128,6 +119,26 @@ export const VisitVisaSection: React.FC<VisitVisaSectionProps> = ({ onOpenConsul
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Centered CTA applying to entire visitor visa section - Fixed Issue 13 */}
+        <div className="mt-12 pt-8 border-t border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-4 p-6 sm:p-8 rounded-card bg-white border border-travsior-border shadow-sm text-center sm:text-left">
+          <div>
+            <h4 className="text-base sm:text-lg font-bold text-travsior-navy">
+              Ready to verify your visitor visa documentation?
+            </h4>
+            <p className="text-xs sm:text-sm text-travsior-navyMuted mt-1">
+              Avoid costly visa refusals with structured, professional document and intent review.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => onOpenConsultation("Visit Visa")}
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-btn bg-travsior-blue hover:bg-travsior-blueHover text-white text-base font-bold shadow-md hover:shadow-lg transition-all flex-shrink-0"
+          >
+            <span>Talk to a Visa Consultant</span>
+            <ArrowRight className="w-5 h-5" aria-hidden="true" />
+          </button>
         </div>
       </div>
     </section>

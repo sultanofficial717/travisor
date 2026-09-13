@@ -81,29 +81,35 @@ export const StudyAbroadServices: React.FC<StudyAbroadServicesProps> = ({
           </p>
         </div>
 
-        {/* 6 Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+        {/* Stepped 2-Column Services Roadmap - Fixed Issue 14 */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {services.map((srv, idx) => {
             const Icon = srv.icon;
+            const stepNum = `0${idx + 1}`;
             return (
               <div
                 key={idx}
-                className="p-7 rounded-card bg-travsior-bgLight/60 border border-travsior-border hover:border-travsior-blue hover:bg-white hover:shadow-cardHover transition-all duration-300 text-left flex flex-col justify-between group"
+                className="p-7 rounded-card bg-white border border-travsior-border hover:border-travsior-blue shadow-sm hover:shadow-cardHover transition-all duration-300 text-left flex flex-col justify-between group"
               >
                 <div>
-                  <div className="w-12 h-12 rounded-xl bg-white border border-blue-100 shadow-sm flex items-center justify-center text-travsior-blue mb-5 group-hover:bg-travsior-blue group-hover:text-white transition-all">
-                    <Icon className="w-6 h-6" aria-hidden="true" />
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="w-12 h-12 rounded-xl bg-travsior-blueLight text-travsior-blue flex items-center justify-center group-hover:bg-travsior-blue group-hover:text-white transition-all shadow-sm">
+                      <Icon className="w-6 h-6" aria-hidden="true" />
+                    </div>
+                    <span className="text-2xl font-black text-slate-300 group-hover:text-travsior-blue/30 transition-colors">
+                      {stepNum}
+                    </span>
                   </div>
                   <h3 className="text-xl font-bold text-travsior-navy mb-2.5 group-hover:text-travsior-blue transition-colors">
                     {srv.title}
                   </h3>
-                  <p className="text-sm text-travsior-navyMuted leading-relaxed mb-4">
+                  <p className="text-sm text-travsior-navyMuted leading-relaxed mb-5">
                     {srv.description}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-200/70 flex items-center gap-2 text-xs font-medium text-slate-600">
-                  <CheckCircle className="w-3.5 h-3.5 text-travsior-blue flex-shrink-0" aria-hidden="true" />
+                <div className="pt-4 border-t border-slate-100 flex items-center gap-2 text-xs font-bold text-travsior-navy">
+                  <CheckCircle className="w-4 h-4 text-travsior-blue flex-shrink-0" aria-hidden="true" />
                   <span>{srv.detail}</span>
                 </div>
               </div>

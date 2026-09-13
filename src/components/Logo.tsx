@@ -66,7 +66,7 @@ export const Logo: React.FC<LogoProps> = ({
         </span>
         {showTagline && (
           <span
-            className={`text-[10px] tracking-wider uppercase font-medium mt-1 ${
+            className={`text-xs tracking-wider uppercase font-medium mt-1 ${
               isDark ? "text-travsior-navyMuted" : "text-slate-300"
             }`}
           >

@@ -8,41 +8,43 @@ interface ProblemSolutionProps {
 }
 
 export const ProblemSolution: React.FC<ProblemSolutionProps> = ({ onOpenConsultation }) => {
-  const painPoints = [
-    "Too many universities and confusing ranking lists",
-    "Complex, varying eligibility & GPA requirements",
-    "Unclear financial and statement of purpose (SOP) documentation",
-    "Varying visa rules and high risk of visa refusal",
-    "Fear of making an irreversible, expensive mistake",
-    "Impersonal agents who push partner colleges over your goals",
-  ];
-
-  const travsiorSolutions = [
+  const comparisonPairs = [
     {
-      title: "Student-Centric Shortlisting",
-      desc: "Target institutions selected solely on academic fit and return on investment, not agency commission rates.",
+      problem: "Confusing university rankings and commission-driven agents pushing partner colleges.",
+      solution: {
+        title: "Student-Centric Shortlisting",
+        desc: "Institutions selected strictly on your academic fit, budget, and ROI — zero agency commission bias.",
+      },
     },
     {
-      title: "Accurate SOP & Visa Prep",
-      desc: "Rigorous document reviews and tailored statements of purpose that meet official immigration standards.",
+      problem: "Unclear GPA criteria, vague prerequisites, and fear of irreversible application errors.",
+      solution: {
+        title: "Objective Eligibility Assessment",
+        desc: "Precise evaluation of your qualifications with clear, realistic pathway options upfront.",
+      },
     },
     {
-      title: "Transparent Cost Analysis",
-      desc: "Upfront tuition breakdowns, realistic living expense estimates, and scholarship application support.",
+      problem: "Generic statement of purpose templates and confusing financial documentation rules.",
+      solution: {
+        title: "Rigorous SOP & Document Review",
+        desc: "Bespoke, human-reviewed SOP drafting and institutional-grade financial checklists.",
+      },
     },
     {
-      title: "Direct Advisor Access",
-      desc: "Consistent guidance from experienced mobility consultants who know your case personally.",
+      problem: "Varying immigration rules, hidden costs, and anxiety over visa refusal risks.",
+      solution: {
+        title: "Transparent Costs & Direct Advisor Access",
+        desc: "Upfront tuition breakdowns, realistic living estimates, and direct access to personal advisors.",
+      },
     },
   ];
 
   return (
-    <section className="py-20 md:py-24 bg-white">
+    <section className="py-20 md:py-28 bg-white">
       <div className="max-w-container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          {/* Fixed Issue 7: text-blue-900 on bg-blue-50 provides > 10:1 contrast */}
-          <span className="text-xs font-bold text-blue-900 bg-blue-50 px-3.5 py-1.5 rounded-full border border-blue-200">
+        <div className="text-center max-w-3xl mx-auto mb-14">
+          <span className="text-xs font-bold text-travsior-navy bg-blue-50 px-3.5 py-1.5 rounded-full border border-blue-200 shadow-sm">
             The Travsior Advantage
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-travsior-navy mt-4 tracking-tight">
@@ -53,68 +55,73 @@ export const ProblemSolution: React.FC<ProblemSolutionProps> = ({ onOpenConsulta
           </p>
         </div>
 
-        {/* Comparison Grid: Traditional vs Travsior */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          {/* Traditional Way */}
-          <div className="lg:col-span-5 p-7 sm:p-8 rounded-card bg-slate-50 border border-slate-200 flex flex-col justify-between text-left">
-            <div>
-              {/* Fixed Issue 8: text-rose-700 (#be123c) yields 6.01:1 contrast on #f8fafc */}
-              <div className="flex items-center gap-2 text-rose-700 mb-4">
+        {/* Fixed Issue 9: Row-based aligned comparison grid */}
+        <div className="max-w-5xl mx-auto rounded-card border border-slate-200 overflow-hidden shadow-card bg-white">
+          {/* Header Row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 border-b border-slate-200 text-left">
+            <div className="p-5 sm:p-6 bg-slate-50 border-b md:border-b-0 md:border-r border-slate-200 flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center flex-shrink-0">
                 <AlertCircle className="w-5 h-5" aria-hidden="true" />
-                <span className="text-xs font-bold">The Traditional Way</span>
               </div>
-              <h3 className="text-xl font-bold text-slate-800 mb-3">
-                Overwhelming, Opacity &amp; Pressure
-              </h3>
-              <p className="text-sm text-slate-600 mb-6 leading-relaxed">
-                Most students get stuck in endless research, conflicting advice from forums, and visa agents pushing only high-commission colleges.
-              </p>
-              <ul className="space-y-3">
-                {painPoints.map((point, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-600">
-                    <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-2 flex-shrink-0" aria-hidden="true" />
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
+              <div>
+                <span className="text-xs font-bold text-rose-700 uppercase tracking-wider">Common Frustrations</span>
+                <h3 className="text-lg sm:text-xl font-bold text-travsior-navy">The Traditional Way</h3>
+              </div>
+            </div>
+
+            <div className="p-5 sm:p-6 bg-travsior-navy text-white flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0">
+                <CheckCircle2 className="w-5 h-5" aria-hidden="true" />
+              </div>
+              <div>
+                <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">Transparent &amp; Guided</span>
+                <h3 className="text-lg sm:text-xl font-bold text-white">The Travsior Way</h3>
+              </div>
             </div>
           </div>
 
-          {/* Travsior Way */}
-          <div className="lg:col-span-7 p-7 sm:p-9 rounded-card bg-travsior-navy text-white shadow-card flex flex-col justify-between relative overflow-hidden text-left">
-            <div className="relative z-10">
-              <div className="flex items-center gap-2 text-emerald-400 mb-4">
-                <CheckCircle2 className="w-5 h-5" aria-hidden="true" />
-                <span className="text-xs font-bold">The Travsior Way</span>
-              </div>
-              <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3">
-                A Guided, Fast &amp; Transparent Pathway
-              </h3>
-              <p className="text-slate-200 text-sm sm:text-base mb-6 leading-relaxed">
-                We empower your ambitions with honest profile evaluation, university shortlisting tailored strictly to your goals, and institutional-grade visa documentation.
-              </p>
+          {/* Horizontally Aligned Comparison Rows */}
+          <div className="divide-y divide-slate-200">
+            {comparisonPairs.map((pair, idx) => (
+              <div key={idx} className="grid grid-cols-1 md:grid-cols-2 text-left items-stretch">
+                {/* Traditional Column */}
+                <div className="p-5 sm:p-6 bg-slate-50/70 border-b md:border-b-0 md:border-r border-slate-200 flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full bg-rose-500 mt-2 flex-shrink-0" aria-hidden="true" />
+                  <p className="text-xs sm:text-sm text-travsior-navyMuted font-medium leading-relaxed">
+                    {pair.problem}
+                  </p>
+                </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
-                {travsiorSolutions.map((sol, idx) => (
-                  <div key={idx} className="p-4 rounded-xl bg-white/5 border border-white/10">
-                    <h4 className="text-sm font-bold text-white mb-1">{sol.title}</h4>
-                    <p className="text-xs text-slate-300">{sol.desc}</p>
+                {/* Travsior Column */}
+                <div className="p-5 sm:p-6 bg-white flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-travsior-blue mt-0.5 flex-shrink-0" aria-hidden="true" />
+                  <div>
+                    <h4 className="text-sm sm:text-base font-bold text-travsior-navy mb-1">
+                      {pair.solution.title}
+                    </h4>
+                    <p className="text-xs sm:text-sm text-travsior-navyMuted leading-relaxed">
+                      {pair.solution.desc}
+                    </p>
                   </div>
-                ))}
+                </div>
               </div>
-            </div>
+            ))}
+          </div>
 
-            {/* Fixed Issue 9: bg-travsior-blue (#0958D9) yields 6.16:1 contrast against white */}
-            <div className="pt-4 border-t border-white/10 flex items-center justify-between">
-              <span className="text-xs sm:text-sm text-slate-300">Ready to see your options?</span>
-              <button
-                onClick={onOpenConsultation}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-btn bg-travsior-blue hover:bg-travsior-blueHover text-white text-xs sm:text-sm font-semibold transition-all shadow-sm"
-              >
-                <span>Talk to an Advisor</span>
-                <ArrowRight className="w-4 h-4" aria-hidden="true" />
-              </button>
+          {/* Action Footer */}
+          <div className="p-6 bg-travsior-bgLight border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+            <div>
+              <span className="text-sm font-bold text-travsior-navy">Ready for an objective evaluation?</span>
+              <p className="text-xs text-travsior-navyMuted mt-0.5">Explore your genuine chances of admission and scholarship.</p>
             </div>
+            <button
+              type="button"
+              onClick={onOpenConsultation}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-btn bg-travsior-blue hover:bg-travsior-blueHover text-white text-sm font-bold transition-all shadow-md hover:shadow-lg flex-shrink-0"
+            >
+              <span>Talk to an Advisor</span>
+              <ArrowRight className="w-4 h-4" aria-hidden="true" />
+            </button>
           </div>
         </div>
       </div>

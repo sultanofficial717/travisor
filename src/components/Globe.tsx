@@ -149,9 +149,14 @@ interface PlaneTag {
 interface GlobeProps {
   onSelectDestination?: (country: string) => void;
   className?: string;
+  isBackground?: boolean;
 }
 
-export const Globe: React.FC<GlobeProps> = ({ onSelectDestination, className = "" }) => {
+export const Globe: React.FC<GlobeProps> = ({
+  onSelectDestination,
+  className = "",
+  isBackground = false,
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [activePopups, setActivePopups] = useState<Record<string, ActivePopup>>({});
@@ -218,10 +223,15 @@ export const Globe: React.FC<GlobeProps> = ({ onSelectDestination, className = "
     scene.add(dirLightTop);
 
     // 3. Globe Root Object
-    const globeRadius = 2.3;
+    const globeRadius = isBackground ? 2.45 : 2.3;
     const globeGroup = new THREE.Group();
     globeGroup.rotation.x = globeRotationRef.current.x;
     globeGroup.rotation.y = globeRotationRef.current.y;
+
+    if (isBackground) {
+      const isWide = width >= 1024;
+      globeGroup.position.set(isWide ? 1.5 : 0, isWide ? -0.1 : 0.2, 0);
+    }
     scene.add(globeGroup);
 
     // Globe Base Sphere with Texture
@@ -682,6 +692,11 @@ export const Globe: React.FC<GlobeProps> = ({ onSelectDestination, className = "
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
       renderer.setSize(width, height);
+
+      if (isBackground) {
+        const isWide = width >= 1024;
+        globeGroup.position.set(isWide ? 1.5 : 0, isWide ? -0.1 : 0.2, 0);
+      }
     };
     window.addEventListener("resize", handleResize);
 
@@ -907,28 +922,34 @@ export const Globe: React.FC<GlobeProps> = ({ onSelectDestination, className = "
   return (
     <div
       ref={containerRef}
-      className={`relative w-full rounded-3xl overflow-hidden bg-gradient-to-b from-[#091a2e] via-[#0d233a] to-[#0a192f] border-2 border-blue-500/20 shadow-2xl select-none group ${className}`}
+      className={
+        isBackground
+          ? `relative w-full h-full select-none overflow-hidden ${className}`
+          : `relative w-full rounded-3xl overflow-hidden bg-gradient-to-b from-[#091a2e] via-[#0d233a] to-[#0a192f] border-2 border-blue-500/20 shadow-2xl select-none group ${className}`
+      }
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{ touchAction: "none" }}
     >
-      {/* Top Status Bar Inside Card */}
-      <div className="absolute top-4 inset-x-4 z-20 flex items-center justify-between pointer-events-none">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-travsior-navy/80 border border-blue-400/30 backdrop-blur-md shadow-lg">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-          </span>
-          <span className="text-xs font-semibold text-white tracking-wide">
-            Global Visa &amp; Study Routes
-          </span>
-        </div>
+      {/* Top Status Bar Inside Card (only in card mode) */}
+      {!isBackground && (
+        <div className="absolute top-4 inset-x-4 z-20 flex items-center justify-between pointer-events-none">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-travsior-navy/80 border border-blue-400/30 backdrop-blur-md shadow-lg">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+            </span>
+            <span className="text-xs font-semibold text-white tracking-wide">
+              Global Visa &amp; Study Routes
+            </span>
+          </div>
 
-        <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-xs font-medium text-blue-100 shadow-lg">
-          <Compass className="w-3.5 h-3.5 text-blue-300 animate-spin-slow" />
-          <span>Drag to rotate</span>
+          <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-xs font-medium text-blue-100 shadow-lg">
+            <Compass className="w-3.5 h-3.5 text-blue-300 animate-spin-slow" />
+            <span>Drag to rotate</span>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* 3D WebGL Canvas */}
       <canvas
@@ -948,7 +969,7 @@ export const Globe: React.FC<GlobeProps> = ({ onSelectDestination, className = "
               top: `${tag.screenY}px`,
             }}
           >
-            <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-travsior-navy/90 border border-sky-400/50 text-[11px] font-bold text-white shadow-float backdrop-blur-sm">
+            <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-travsior-navy/90 border border-sky-400/50 text-xs font-bold text-white shadow-float backdrop-blur-sm">
               <span className="text-sky-300">✈</span>
               <span>{tag.routeText}</span>
             </div>
@@ -970,7 +991,7 @@ export const Globe: React.FC<GlobeProps> = ({ onSelectDestination, className = "
           >
             <div
               onClick={() => focusCountry(popup.destination)}
-              className="cursor-pointer group/popup relative flex flex-col p-2.5 sm:p-3 rounded-xl bg-white/95 backdrop-blur-md border border-travsior-blue shadow-float hover:shadow-cardHover transition-all hover:scale-105 active:scale-95 text-left min-w-[160px] sm:min-w-[190px]"
+              className="cursor-pointer group/popup relative flex flex-col p-2.5 sm:p-3 rounded-card bg-white/95 backdrop-blur-md border-2 border-travsior-blue shadow-float hover:shadow-cardHover transition-all hover:scale-105 active:scale-95 text-left min-w-[170px] sm:min-w-[200px]"
             >
               {/* Country Name + Location Emoji Header */}
               <div className="flex items-center justify-between gap-2">
@@ -985,63 +1006,65 @@ export const Globe: React.FC<GlobeProps> = ({ onSelectDestination, className = "
                     {popup.destination.country}
                   </span>
                 </div>
-                <span className="px-1.5 py-0.5 rounded bg-blue-50 text-[10px] font-bold text-travsior-blue border border-blue-200">
+                <span className="px-1.5 py-0.5 rounded-btn bg-blue-50 text-xs font-bold text-travsior-blue border border-blue-200">
                   {popup.destination.code}
                 </span>
               </div>
 
               {/* Status Badge */}
-              <div className="mt-1 flex items-center gap-1 text-[11px] font-medium text-slate-600">
-                <span className="text-xs">{popup.statusEmoji}</span>
+              <div className="mt-1.5 flex items-center gap-1 text-xs font-semibold text-travsior-navyMuted">
+                <span>{popup.statusEmoji}</span>
                 <span className="truncate">{popup.statusText}</span>
               </div>
 
               {/* Visa / University Highlights */}
-              <div className="mt-1.5 pt-1.5 border-t border-slate-100 flex items-center justify-between text-[10px] font-semibold text-travsior-blue group-hover/popup:text-travsior-blueHover">
+              <div className="mt-1.5 pt-1.5 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-travsior-blue group-hover/popup:text-travsior-blueHover">
                 <span>{popup.destination.city} Hub</span>
                 <span className="inline-flex items-center gap-0.5">
-                  Explore <ExternalLink className="w-2.5 h-2.5" />
+                  Explore <ExternalLink className="w-3 h-3" />
                 </span>
               </div>
 
               {/* Downward Anchor Arrow */}
-              <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-r border-b border-travsior-blue rotate-45" />
+              <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-r-2 border-b-2 border-travsior-blue rotate-45" />
             </div>
           </div>
         );
       })}
 
-      {/* Bottom Destination Quick Pills Carousel */}
-      <div className="absolute bottom-3 sm:bottom-4 inset-x-3 sm:inset-x-4 z-20 flex flex-col gap-2">
-        <div className="flex items-center justify-between px-1 text-[11px] font-semibold text-blue-200">
-          <span className="inline-flex items-center gap-1">
-            <Plane className="w-3 h-3 text-blue-400 rotate-45" />
-            Featured Destinations:
-          </span>
-          <span className="text-blue-300/80 text-[10px]">Click country to navigate</span>
-        </div>
+      {/* Bottom Destination Quick Pills Carousel (only in card mode) */}
+      {!isBackground && (
+        <div className="absolute bottom-3 sm:bottom-4 inset-x-3 sm:inset-x-4 z-20 flex flex-col gap-2">
+          <div className="flex items-center justify-between px-1 text-xs font-semibold text-blue-200">
+            <span className="inline-flex items-center gap-1">
+              <Plane className="w-3.5 h-3.5 text-blue-400 rotate-45" />
+              Featured Destinations:
+            </span>
+            <span className="text-blue-300 text-xs font-medium">Click country to navigate</span>
+          </div>
 
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar mask-fade">
-          {DESTINATIONS.map((dest) => {
-            const isSelected = selectedCountry === dest.id;
-            return (
-              <button
-                key={dest.id}
-                type="button"
-                onClick={() => focusCountry(dest)}
-                className={`flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all backdrop-blur-md ${
-                  isSelected
-                    ? "bg-travsior-blue text-white shadow-md shadow-blue-500/40 border border-blue-300 scale-105"
-                    : "bg-travsior-navy/70 text-blue-100 border border-blue-400/20 hover:bg-travsior-navy hover:text-white hover:border-blue-300/50"
-                }`}
-              >
-                <span>{dest.flag}</span>
-                <span>{dest.code}</span>
-              </button>
-            );
-          })}
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar mask-fade">
+            {DESTINATIONS.map((dest) => {
+              const isSelected = selectedCountry === dest.id;
+              return (
+                <button
+                  key={dest.id}
+                  type="button"
+                  onClick={() => focusCountry(dest)}
+                  className={`flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all backdrop-blur-md ${
+                    isSelected
+                      ? "bg-travsior-blue text-white shadow-md shadow-blue-500/40 border border-blue-300 scale-105"
+                      : "bg-travsior-navy/70 text-blue-100 border border-blue-400/20 hover:bg-travsior-navy hover:text-white hover:border-blue-300/50"
+                  }`}
+                >
+                  <span>{dest.flag}</span>
+                  <span>{dest.code}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Loading Placeholder */}
       {!isLoaded && (

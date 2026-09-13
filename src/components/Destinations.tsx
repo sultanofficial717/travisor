@@ -181,21 +181,28 @@ export const Destinations: React.FC<DestinationsProps> = ({ onOpenConsultation }
           ))}
         </div>
 
-        {/* Compare Options Banner */}
-        <div className="mt-12 p-6 sm:p-7 rounded-2xl bg-white border border-travsior-border flex flex-col md:flex-row items-center justify-between gap-5 text-center md:text-left">
-          <div className="max-w-xl">
-            <h4 className="text-base font-bold text-travsior-navy">
-              Not sure which country suits your budget and profile?
-            </h4>
-            <p className="text-sm text-travsior-navyMuted mt-1">
-              We provide side-by-side comparative analysis of post-study stay options, living costs, and scholarships.
-            </p>
+        {/* Prominent Compare Options Card - Fixed Issue 10 */}
+        <div className="mt-14 max-w-3xl mx-auto p-8 rounded-card bg-white border-2 border-travsior-blue/30 shadow-card hover:shadow-cardHover text-center flex flex-col items-center gap-4 transition-all">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-bold text-travsior-navy">
+            <span className="w-2 h-2 rounded-full bg-travsior-blue animate-pulse" />
+            <span>Interactive Country Evaluation</span>
           </div>
+
+          <h3 className="text-xl sm:text-2xl font-extrabold text-travsior-navy">
+            Not sure which country suits your budget and profile?
+          </h3>
+
+          <p className="text-sm sm:text-base text-travsior-navyMuted max-w-xl leading-relaxed">
+            We provide side-by-side comparative analysis of post-study stay options, living costs, university fees, and scholarships.
+          </p>
+
           <button
+            type="button"
             onClick={() => onOpenConsultation()}
-            className="px-6 py-3 rounded-btn bg-travsior-navy hover:bg-travsior-navyLight text-white text-sm font-semibold flex-shrink-0 transition-all shadow-sm"
+            className="mt-2 inline-flex items-center gap-2 px-8 py-4 rounded-btn bg-travsior-blue hover:bg-travsior-blueHover text-white text-base font-bold transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
           >
-            Compare My Options
+            <span>Compare My Options</span>
+            <ArrowRight className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
       </div>

@@ -42,24 +42,26 @@ export const EligibilityAssessment: React.FC = () => {
   const stepTitles = ["Goal & Profile", "Destination & Timing", "Contact Details"];
 
   return (
-    <section id="eligibility" className="py-20 md:py-28 bg-white relative">
-      <div className="max-w-container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl mx-auto text-center mb-10">
-          {/* Fixed Issue 26: text-blue-900 on bg-blue-50/border-blue-200 provides > 10:1 contrast */}
-          <span className="text-xs font-bold text-blue-900 bg-blue-50 px-3.5 py-1.5 rounded-full border border-blue-200 inline-flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-travsior-blue" aria-hidden="true" />
-            Instant Pathway Calculator
+    <section id="eligibility" className="py-20 md:py-28 bg-gradient-to-b from-travsior-navy via-[#0c2035] to-travsior-navy relative text-white overflow-hidden">
+      {/* Ambient background glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-travsior-blue/15 rounded-full blur-3xl pointer-events-none -z-0" />
+
+      <div className="max-w-container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-2xl mx-auto text-center mb-12">
+          <span className="text-xs font-bold text-sky-300 bg-blue-500/20 px-3.5 py-1.5 rounded-full border border-blue-400/30 inline-flex items-center gap-1.5 shadow-sm">
+            <Sparkles className="w-3.5 h-3.5 text-sky-400" aria-hidden="true" />
+            Interactive Assessment Utility
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-travsior-navy mt-4 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mt-4 tracking-tight">
             Not sure where you qualify?
           </h2>
-          <p className="text-base text-travsior-navyMuted mt-3">
+          <p className="text-base text-slate-300 mt-3 leading-relaxed">
             Tell us about your plans. Our advisors will assess your academic profile and provide clear, realistic options within 24 hours.
           </p>
         </div>
 
-        {/* Interactive Form Card */}
-        <div className="max-w-xl mx-auto bg-travsior-bgLight/90 border border-travsior-border rounded-2xl shadow-card p-6 sm:p-8 text-left relative overflow-hidden">
+        {/* Interactive App-Like Form Card */}
+        <div className="max-w-xl mx-auto bg-white text-travsior-navy border-2 border-blue-400/40 rounded-card shadow-2xl p-6 sm:p-8 text-left relative overflow-hidden">
           {/* Progress Indicator - Fixed Issue 27: text-travsior-blue (#0958D9) yields 5.83:1 contrast on #f6faff */}
           {!isCompleted && (
             <div className="mb-6">
